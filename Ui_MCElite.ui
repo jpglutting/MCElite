@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MCELite</class>
+ <widget class="QDialog" name="MCELite">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>687</width>
+    <height>266</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MCELite</string>
+  </property>
+  <widget class="QTabWidget" name="tabWidget">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>9</y>
+     <width>620</width>
+     <height>220</height>
+    </rect>
+   </property>
+   <property name="currentIndex">
+    <number>2</number>
+   </property>
+   <widget class="QWidget" name="tabBool">
+    <attribute name="title">
+     <string>Boolean</string>
+    </attribute>
+    <widget class="QLabel" name="labelConstraintsBool">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>10</y>
+       <width>151</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Number of Constraints</string>
+     </property>
+     <property name="margin">
+      <number>1</number>
+     </property>
+     <property name="indent">
+      <number>0</number>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="tabWLC">
+    <attribute name="title">
+     <string>WLC</string>
+    </attribute>
+    <widget class="QLabel" name="labelConstraintsWLC">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>10</y>
+       <width>151</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Number of Constraints</string>
+     </property>
+     <property name="margin">
+      <number>1</number>
+     </property>
+     <property name="indent">
+      <number>0</number>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelFactorsWLC">
+     <property name="geometry">
+      <rect>
+       <x>245</x>
+       <y>10</y>
+       <width>121</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Number of Factors</string>
+     </property>
+     <property name="margin">
+      <number>1</number>
+     </property>
+     <property name="indent">
+      <number>0</number>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelSensitivityWLC">
+     <property name="geometry">
+      <rect>
+       <x>530</x>
+       <y>0</y>
+       <width>71</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Sensitivity
+analysis</string>
+     </property>
+     <property name="margin">
+      <number>1</number>
+     </property>
+     <property name="indent">
+      <number>0</number>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelWeightsWLC">
+     <property name="geometry">
+      <rect>
+       <x>460</x>
+       <y>0</y>
+       <width>51</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Factor
+weights</string>
+     </property>
+     <property name="margin">
+      <number>1</number>
+     </property>
+     <property name="indent">
+      <number>0</number>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="tabOWA">
+    <attribute name="title">
+     <string>OWA</string>
+    </attribute>
+    <widget class="QLabel" name="labelFactorsOWA">
+     <property name="geometry">
+      <rect>
+       <x>245</x>
+       <y>10</y>
+       <width>121</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Number of Factors</string>
+     </property>
+     <property name="margin">
+      <number>1</number>
+     </property>
+     <property name="indent">
+      <number>0</number>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelConstraintsOWA">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>10</y>
+       <width>151</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Number of Constraints</string>
+     </property>
+     <property name="margin">
+      <number>1</number>
+     </property>
+     <property name="indent">
+      <number>0</number>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelWeightsOWA">
+     <property name="geometry">
+      <rect>
+       <x>460</x>
+       <y>0</y>
+       <width>51</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Factor
+weights</string>
+     </property>
+     <property name="margin">
+      <number>1</number>
+     </property>
+     <property name="indent">
+      <number>0</number>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelSensitivityOWA">
+     <property name="geometry">
+      <rect>
+       <x>530</x>
+       <y>0</y>
+       <width>71</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Sensitivity
+analysis</string>
+     </property>
+     <property name="margin">
+      <number>1</number>
+     </property>
+     <property name="indent">
+      <number>0</number>
+     </property>
+    </widget>
+   </widget>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
