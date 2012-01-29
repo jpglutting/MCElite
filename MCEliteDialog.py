@@ -27,8 +27,8 @@ from sys import exc_info
 from PyQt4 import QtCore, QtGui 
 from qgis.core import QgsRasterLayer, QgsContrastEnhancement, QgsMapLayerRegistry
 from Ui_MCElite import Ui_MCElite
-from mcelite.QueryManager import QgisQueryManager
-from mcelite.MCErrorClasses import MCEliteError
+from lib.QueryManager import QgisQueryManager
+from lib.MCErrorClasses import MCEliteError
 
 # create the dialog for zoom to point
 class MCEliteDialog(QtGui.QDialog):
