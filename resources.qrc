@@ -1,0 +1,6 @@
+<RCC> 
+  <qresource prefix="/plugins/mcelite" > 
+    <file>mcelite.png</file> 
+  </qresource> 
+</RCC> 
+

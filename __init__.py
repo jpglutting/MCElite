@@ -28,7 +28,7 @@ def description():
     return "Multiple Criteria Analysis tool"
 
 def version(): 
-    return "Version 0.1.3" 
+    return "Version 0.1.2" 
 
 def qgisMinimumVersion():
     return "1.0"
