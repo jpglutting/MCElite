@@ -4,7 +4,7 @@
 ***************************************************************************
 MCElite
 Multiple Criteria Analysis tool
-                             -------------------
+-------------------
 begin                : 2010-08-27 
 copyright            : (C) 2010 by JP Glutting
 email                : jpglutting@gmail.com 
