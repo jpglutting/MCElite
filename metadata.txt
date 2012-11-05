@@ -1,11 +1,17 @@
 [general]
-name=Multi-Criteria Evaluation Tool
-description=Tool for making multi-criteria evaluations based on raster factors and constraints
-version=0.1
+name=MCElite
+description=Multi-Criteria Evaluation Toolfor making multi-criteria evaluations (MCE) based on raster factors and constraints
 qgisMinimumVersion=1.0
-class_name=mcelite
-website=
+class_name=MCElite
+website=www.jpglutting.com
+version=0.1
+
 [author]
 name=JP Glutting
 email=jpglutting@gmail.com
 
+; experimental flag
+experimental=True
+
+; deprecated flag (applies to the whole plugin and not only to the uploaded version)
+deprecated=False

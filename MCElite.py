@@ -43,6 +43,7 @@ class MCElite:
         QObject.connect(self.action, SIGNAL("triggered()"), self.slotRun) 
         self.helpaction = QAction(QIcon(":/mcehelp.png"), "Help", self.iface.mainWindow())
         self.helpaction.setWhatsThis("MCElite Help")
+        self.action.setStatusTip("MCElite")
         QObject.connect(self.helpaction, SIGNAL("activated()"), self.helprun)
         # Add toolbar button and menu item
         self.iface.addToolBarIcon(self.action)

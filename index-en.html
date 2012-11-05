@@ -1,0 +1,561 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+  <head>
+    <meta http-equiv="CONTENT-TYPE" content="text/html; charset=UTF-8">
+    <title>MCElite Documentation</title>
+    <meta name="AUTHOR" content="JP Glutting">
+    <meta name="CREATED" content="20091107;10525100">
+    <meta name="CHANGED" content="20121104;15340600">
+    <style type="text/css">
+	<!--
+		@page { margin-left: 0.39in; margin-right: 0.39in; margin-top: 0.59in; margin-bottom: 0.71in }
+		@page:first { margin: 0.79in }
+		P { text-indent: 0.1in; margin-bottom: 0.08in; line-height: 150% }
+		P.western { font-size: 10pt }
+		H4 { margin-left: 0.38in; text-indent: -0.3in; margin-bottom: 0.08in; line-height: 150% }
+		H4.western { font-family: "Georgia", serif; font-size: 11pt; font-style: normal }
+		H4.cjk { font-family: "MS Mincho"; font-size: 11pt; font-style: italic }
+		H4.ctl { font-size: 11pt; font-style: italic }
+		H5 { margin-left: 0.42in; text-indent: -0.3in; margin-bottom: 0.08in; line-height: 150% }
+		H5.western { font-family: "Georgia", serif; font-size: 11pt; font-style: italic; font-weight: normal }
+		H5.cjk { font-family: "MS Mincho"; font-size: 11pt }
+		H5.ctl { font-size: 11pt }
+		H2 { text-indent: 0.1in; margin-bottom: 0.08in; line-height: 150% }
+		H2.western { font-family: "Georgia", serif; font-size: 13pt; font-style: normal }
+		H2.cjk { font-family: "MS Mincho"; font-size: 14pt; font-style: italic }
+		H2.ctl { font-size: 14pt; font-style: italic }
+		H3 { margin-left: 0.34in; text-indent: -0.3in; margin-bottom: 0.08in; line-height: 150% }
+		H3.western { font-family: "Georgia", serif; font-size: 12pt; font-style: italic }
+		H3.cjk { font-family: "MS Mincho" }
+		P.list-indent-western { margin-left: 1.97in; text-indent: -1.77in; margin-bottom: 0in; font-size: 10pt; line-height: 100% }
+		P.list-indent-cjk { margin-left: 1.97in; text-indent: -1.77in; margin-bottom: 0in; line-height: 100% }
+		P.list-indent-ctl { margin-left: 1.97in; text-indent: -1.77in; margin-bottom: 0in; line-height: 100% }
+		A:link { so-language: zxx }
+	-->
+	</style>
+  </head>
+  <body dir="LTR" lang="en-US">
+    <h1 align="CENTER">MCELite: A Cross-Platform Tool for Multi-Criteria
+      Evaluation</h1>
+    <p align="CENTER"> <br>
+      JP Glutting (<a href="mailto:jpglutting@gmail.com?subject=MCElite_feedback">jpglutting@gmail.com</a>)<br>
+      <br>
+    </p>
+    <div id="Table of Contents1" dir="LTR" style="background: #ffffff">
+      <div id="Table of Contents1_Head" dir="LTR">
+        <h2 style="text-indent: 0in; margin-top: 0.17in; page-break-before: always; page-break-after: avoid">
+          <a name="TOC"><font style="font-size: 16pt" size="4"><b>Table of
+                Contents</b></font></a></h2>
+      </div>
+      <ul>
+        <li><a href="#Introduction">Introduction</a></li>
+        <li><a target="_top" href="#Dependencies">Dependencies</a></li>
+        <ul>
+          <li><a href="#depWindows">Windows</a> </li>
+          <li><a href="#depOSX">OS X </a></li>
+          <li><a href="#depLinux">Linux</a></li>
+        </ul>
+        <li> <a href="#Modes">Modes of Use</a></li>
+        <ul>
+          <li> <a href="#modeStandalone">Standalone Mode</a></li>
+          <ul>
+            <li> Prerequisites</li>
+            <li> Installation</li>
+            <li>Interface</li>
+          </ul>
+          <li><a href="#modeQGIS">QGIS</a></li>
+          <ul>
+            <li>Prerequisites</li>
+            <li>Installation</li>
+            <li>Interface</li>
+          </ul>
+        </ul>
+        <ul>
+          <li><a href="#AnalyticalFunctions">Analytical Functions</a></li>
+          <ul>
+            <li>Boolean Overlay</li>
+            <li>Weighted Linear Combination</li>
+            <li>Ordered Weighted Averaging</li>
+            <li>Sensitivity Analysis</li>
+          </ul>
+          <li><a href="#Configuration">Configuration files</a></li>
+          <li><a href="#Testing">Testing</a></li>
+          <li>Limitations</li>
+          <li>Potential Improvements</li>
+          <li><a href="#Bugs">Bugs</a></li>
+          <li><a href="#UnderTheHood">Under the Hood</a></li>
+          <li><a href="#References">References</a></li>
+        </ul>
+      </ul>
+    </div>
+    <h2><a name="Introduction">Introduction</a></h2>
+    <p>MCELite is a multi-criteria evaluation (MCE) tool written in Python.
+      Given the appropriate raster layers as input, it executes one of three
+      types of MCE: Boolean overlay, weighted linear combination (WLC) or
+      ordered weighted averaging (OWA). The installation package includes
+      documentation and examples. </p>
+    <p>MCELite is designed to work in four modes: as a standalone Python library
+      that can be called from other Python programs, as an ArcMap 9.3 plugin, as
+      an IDRISI Taiga plugin and as a QuantumGIS (QGIS) plugin. A command line
+      script for running MCELite (mcel.py) is included with the library. Each
+      specific installation includes an “mcelite” package in a sub-directory.
+      [This document refers only to the QGIS version of the tool].</p>
+    <h2><a name="Dependencies">Dependencies</a></h2>
+    <p>MCELite requires, in addition to the standard libraries included with
+      Python, that GDAL with Python bindings be installed, as well as the Python
+      numeric extension module, Numpy. GDAL is included with all three of the
+      software packages for which MCELite functions as a plugin, and the Numpy
+      module is installed with QGIS and ArcMap. However, GDAL is not available
+      to Python in either IDRISI or ArcMap, and needs to be installed
+      separately. GDAL, of course, must be installed independently to take
+      advantage of the standalone functionality of MCELite.</p>
+    <h5><a name="depWindows">Windows</a></h5>
+    <p>The standalone version of MCELite requires Python version &gt;= 2.5 and
+      &lt; 3.0. It also requires the Numpy libraries and access to the GDAL
+      libraries with Python bindings. Some of the packages that the tool works
+      with provide access to these libraries, but the standalone version must
+      have all of these installed. The easiest way to install all of these
+      packages in Windows to use the Open Source Geospatial Foundation package
+      for Windows (OSGEO4W), available at <a href="http://download.osgeo.org/osgeo4w/osgeo4w-setup.exe">http://download.osgeo.org/osgeo4w/osgeo4w-setup.exe</a>.
+    </p>
+    <p>To use GDAL, system settings need to be modified (under Control Panel
+      =&gt; System and Security =&gt; System in Windows 7). The Path variable
+      needs to have C:\OSGeo4W\bin added to it. The PYTHONPATH variable needs to
+      have C:\OSGeo4W\apps\gdal-16\pymod added to it (or whatever available GDAL
+      version desired instead of gdal 1.6). After making changes, all open
+      terminal and ArcMap sessions need to be restarted.</p>
+    <h5><a name="depOSX">OS X</a></h5>
+    <a name="depOSX"> </a>
+    <p><a name="depOSX">For OS X the required libraries and tools are available
+        from a variety of locations, the best probably being the MacPorts
+        project (</a><a href="http://www.macports.org/">http://www.macports.org/</a>).
+      Separate installer packages are also available from William Kyngesburye at
+      his website (<a href="http://www.kyngchaos.com/macosx/index">http://www.kyngchaos.com/macosx/index</a>).</p>
+    <h5><a name="depLinux">Linux</a></h5>
+    <p> Linux packages are available as source code from the various project
+      websites, or more easily through a package manager (such as the Apt system
+      in the popular Ubuntu Linux distribution). The 10.10 version of Ubuntu
+      provides version 1.4 of QGIS, which works well with MCELite.</p>
+    <h2><a name="Modes">Modes of Use</a></h2>
+    <h3><a name="modeStandalone">Standalone Mode</a></h3>
+    <p>This package includes the mcelite library and a command line interface
+      (CLI) script (mcel.py). The script is called as follows, for example:
+      “mcel.py -c
+      &lt;path_to_config_file&gt;/bool_win_example_configuration.txt”. The -C
+      flag indicates the configuration file. There is an optional -e
+      (“environment”) argument, but it is not needed as the script will provide
+      a default.</p>
+    <h4>Prerequisites</h4>
+    <p>MCELite requires the Numpy Python package and an installation of GDAL
+      with Python bindings. Any recent version of these libraries is sufficient.</p>
+    <h4>Installation </h4>
+    <p>The installation of the standalone application involves simply unzipping
+      the compressed file. To make use of the QueryManager and RasterServices
+      libraries outside of the directory where files are unzipped, the mcelite
+      lib directory should be copied to the site-packages directory of the
+      active Python installation.</p>
+    <h4>Interface</h4>
+    <p>In the standalone mode, the mcelite library can be imported into Python
+      programs (or the interactive Python interpreter) and used to manipulate
+      rasters. Much of the preliminary testing of MCELite functionality was done
+      from the command line, and this mode is ideal for automating analytical
+      tasks. The command line also makes it possible to use MCELite for more
+      extensive data sets than are possible with the GUI versions (with more
+      than ten constraint and ten factor layers, for example).</p>
+    <p>A configuration file with the parameters of the analysis will always be
+      written into the same directory as the results, with the file name
+      “&lt;results_filename&gt;_configuration_&lt;MCEtype&gt;.txt” (for example,
+      “first_test_configuration_WLC.txt”).</p>
+    <h3><a name="modeQGIS">QGIS</a></h3>
+    <h4>Prerequisites</h4>
+    <p>The QGIS version of MCELite on Windows requires version 1.5 of the QGIS
+      program. This can be installed using the OSGEO4W package installer (<a href="http://download.osgeo.org/osgeo4w/osgeo4w-setup.exe">http://download.osgeo.org/osgeo4w/osgeo4w-setup.exe</a>)
+      or using a QGIS standalone version. The NumPy and GDAL libraries and
+      bindings are provided by QGIS and do not require a separate installation.
+    </p>
+    <h4>Installation</h4>
+    <p>MCELite is available through the QGIS Plugin Repository (via the QGIS
+      Plugin interface or the web at <a href="http://pyqgis.org/repo/contributed">http://pyqgis.org/repo/contributed</a>).</p>
+    <h4>Interface</h4>
+    <p>The MCELite tool interface uses a single window with three labeled tabs,
+      “Bool”, “WLC” and “OWA”. These correspond to Multi-criteria analyses using
+      the Boolean overlay method, the weighted linear combination method, and
+      the ordered weighted averaging method, respectively. The interface allows
+      the user to select the type of analysis desired and to input the various
+      parameters (constraint and factor files, weights, and sensitivity analysis
+      parameters), as well as load a configuration file and modify the input
+      parameters before executing the analysis (the new configuration will be
+      saved in a configuration file, of course).</p>
+    <h2><a name="AnalyticalFunctions">Analytical Functions</a></h2>
+    <p>There are several analytical functions that can be executed by MCELite.
+      The package was designed as a work-alike to the IDRISI MCE tool (with the
+      addition of the sensitivity analysis feature). However, MCELite does not
+      have functionality for developing fuzzy membership criteria or factor
+      weights. Factor files will have to be developed using other tools and the
+      raster layers created used as input to the MCELite tool. </p>
+    <p>Each version of the tool includes a directory called “examples” with
+      sample data and sample configuration files for Windows and UNIX systems
+      that uses the data to run the three types of analysis. The paths in these
+      files need to be modified to indicate the correct directory where MCELite
+      is installed. An easy way to develop a set of configuration files is to
+      run an analysis with the interactive tools, and edit the configuration
+      file that is produced (all analytical runs produce configuration files by
+      default).</p>
+    <h3> Boolean Overlay</h3>
+    <p>This analytical process involves multiplying all the rasters (constraints
+      and factors) together. All factors must represent Boolean criteria, so the
+      final effect is a raster of ones and zeros, where the areas with a value
+      of zero are screened out and the areas with a value of one meet all the
+      selection criteria. There is effectively no difference between the way
+      constraints and factors contribute to the final results when using this
+      method.</p>
+    <p>More information on this method is available from the IDRISI Taiga
+      tutorial, Exercise 2-7 (Eastman 2009).</p>
+    <h3> Weighted Linear Combination</h3>
+    <p>This methodology consists of establishing constraints (as boolean
+      rasters) and factors, as rasters which represent selection criteria
+      transformed to a common value scale (0-255, etc.). This scaling
+      transformation functionality is not included in MCELite. The factors are
+      then given weights (using any number of different methods, which are not a
+      part of the functionality of MCELite) and these weights are applied to the
+      factors in a combinatorial method, as described by Malczewski (2000). </p>
+    <p>More information on this method is available from the IDRISI Taiga
+      tutorial, Exercise 2-8 (<span style="background: transparent">Eastman
+        2009).</span></p>
+    <h3> Ordered Weighted Averaging</h3>
+    <p>OWA uses the same methodology as the WLC initially, but after the weights
+      are established, a set of order weights, one per factor layer, is also
+      established. These order weights are applied to the ordered set of values
+      at each raster pixel, in the order of the values from lowest to highest.
+      More information on this methodology is available from the IDRISI Taiga
+      tutorial, Exercise 2-9 (Eastman 2009).</p>
+    <p>The OWA function in MCELite reduces the range of the original data, using
+      the method described by Rinner and Malczewski (2002). The IDRISI method
+      apparently has a function that re-scales the results to the original value
+      range. A similar function may be implemented in later versions of MCELite.</p>
+    <h3>Sensitivity Analysis</h3>
+    <p>A sensitivity analysis can optionally be applied to the last two
+      analytical methods. The user can select any combination of the factor
+      layers for a sensitivity analysis, by index number. A sensitivity analysis
+      varies the weights of the selected factors by a certain percentage between
+      a minimum and maximum range (usually a negative and positive number), at
+      selected step values in the range. Pixel counts are generated for the
+      results of each modified analysis, which are then presented in a
+      comparative results table. The following parameters are used in the
+      analysis:</p>
+    <p><b>Sensitivity Threshold</b>: The value for counting pixels in the
+      results raster (pixel values greater than the threshold will be counted
+      and saved for comparative analysis). This is the acceptability threshold
+      for the final decision in the process.</p>
+    <p><b>Minimum</b>: The lowest value for the comparative range.</p>
+    <p><b>Maximum</b>: The highest values for the comparative range.</p>
+    <p><b>Step</b>: The step value for the range</p>
+    <p>The default values are 175, -0.2, 0.2 and 0.05, respectively, for
+      threshold, minimum, maximum and step. The sensitivity analysis then
+      generates a new analysis for each modification to each weight value
+      (adding the modified percentage, for example, weight <i>w</i> of factor <i>f</i>
+      would be modified by <i>w </i>+ (<i>w </i>* -0.2), then <i>w </i>+ (<i>w
+      </i>* -.15) and so on until <i>w</i> + (<i>w </i>* 0.2). For each new
+      weight value, a new analysis is run.</p>
+    <p>Results are presented in an HTML formatted table in the same directory as
+      the results file with the name
+      “&lt;results_filename&gt;_sensitivity_results.html”. The table shows the
+      step values analyzed and the count of pixels above the selected threshold,
+      both as absolute values and percentage changes from the results in the
+      previous step value (in increasing order). Values that differ by more than
+      the step value are highlighted in color (Figure 1).</p>
+    <p> <b>Figure 1:</b> Results of a default WLC sensitivity analysis, raw
+      scores</p>
+    <p><img src="MCElite_documentation_html_7f38ae97.png" name="graphics1" border="0">
+    </p>
+    <p> <font<b>Figure 2:Results of a default WLC sensitivity analysis,
+        percentage scores</font<b></p>
+    <p> <img src="MCElite_documentation_html_m4042b174.png" name="graphics2" align="LEFT"
+        border="0">
+    </p>
+    <h2><a name="Configuration">Configuration files</a></h2>
+    <p>Configuration files have a single format across all versions of MCELite.
+      A configuration file with the parameters of the analysis will be written
+      into the same directory as the results, with the file name
+      “&lt;results_filename&gt;_configuration_&lt;MCEtype&gt;.txt” (for example,
+      “first_test_configuration_WLC.txt”). They are simple text files, with one
+      entry per line, and are divided into sections with the values or series of
+      values in the section entered, one per lines. If a section is left blank,
+      it will be ignored, if possible. The file has the following sections (see
+      example below):</p>
+    <ul>
+      <li> <b>mcetype</b>: Must be 'Bool', 'WLC', or 'OWA' </li>
+      <li> <b>output_format</b>: a raster format which GDAL is able to create.
+        Currently there are four formats that have been tested: RST (IDRISI
+        raster), Gtiff (GeoTiff), ENVI (ENVI .hdr labelled raster [bil
+        interleaved format]) and EHdr (ESRI .hdr labeled format). See <a href="http://www.gdal.org/formats_list.html">http://www.gdal.org/formats_list.html</a>
+        for more information.</li>
+      <li><b>results</b>: path to a results file. The file ending will be
+        replaced by the appropriate ending for the format specified (.rst, .tif,
+        etc).</li>
+      <li><b>constraints</b>: A series of absolute paths, one per line, to
+        raster files that serve as constraints. </li>
+      <li><b>factors</b>: A series of absolute paths, one per line, to raster
+        files that serve as factors.</li>
+      <li><b>weights</b>: A series of decimal numbers, with values between 0 and
+        1, summing to 1.0. These weights will be applied to the factors in the
+        same index position as the weight (in the sample development file below,
+        the weight 0.1085 is applied to the <i>developfuzz.rst</i> layer, and
+        the weight 0.3171 is applied to the <i>slopefuzz.rst </i>layer).</li>
+      <li> <b>oweights</b>: Order weights. These are used in the Ordered
+        Weighted Averaging. They are indexed by the ranked scores at each
+        coordinate position in the raster set, from lowest to highest. </li>
+      <li> <b>sensitivity</b>: A series of index values of the fields to be
+        included in a sensitivity analysis. Index values refer to the order of
+        factors in the “factors” section. Indexes all begin at zero. If left
+        blank, no sensitivity analysis will be done. In the example below, a
+        sensitivity analysis will be done on the <i>developfuzz</i>, <i>waterfuzz</i>
+        and <i>roadfuzz</i> layer weights. </li>
+      <li> <b>min</b>: The minimum value for the sensitivity testing range. The
+        default values of min = -0.2, max = 0.2 and step = 0.05 results in a
+        series of tests from -20% of the current weight to +20% of the current
+        weight, in steps of 5% (-20%, 15%, etc.). Weight differences are
+        redistributed evenly among the other factors. </li>
+      <li> <b>max</b>: Maximum value for sensitivity testing range. </li>
+      <li> <b>step</b>: Step value for sensitivity testing range. </li>
+      <li> <b>threshold</b>: The threshold above which the value of a raster
+        pixel is considered acceptable. The count of these pixels are presented
+        in the results table. </li>
+      <li> <b>end</b>: the end of the configuration file. No text or newline
+        characters beyond this point will be processed (this section can be used
+        for notes). </li>
+    </ul>
+    <p>The easiest way to make a configuration file is to run an analysis from
+      the GUI and edit the configuration file automatically created by the
+      analysis. There are also sample configuration files included in each
+      version of MCELite, in the examples sub-directory. The paths need to be
+      adapted to the local filesystem. Line endings must be appropriate for the
+      operating system used, so transferring configuration files from one system
+      to another can results in errors. </p>
+    <p> A sample configuration file:</p>
+    <pre>    mcetype  
+    OWA  
+    output_format
+    GTiff  
+    results
+    /Users/jpg/.qgis/python/plugins/mcelite/examples/results/owa_osx_example.rst
+    constraints  
+    /Users/jpg/.qgis/python/plugins/mcelite/examples/data/landcon.rst
+    /Users/jpg/.qgis/python/plugins/mcelite/examples/data/watercon.rst
+    factors  
+    /Users/jpg/.qgis/python/plugins/mcelite/examples/data/developfuzz.rst
+    /Users/jpg/.qgis/python/plugins/mcelite/examples/data/slopefuzz.rst
+    /Users/jpg/.qgis/python/plugins/mcelite/examples/data/landfuzz.rst
+    /Users/jpg/.qgis/python/plugins/mcelite/examples/data/townfuzz.rst
+    /Users/jpg/.qgis/python/plugins/mcelite/examples/data/waterfuzz.rst
+    /Users/jpg/.qgis/python/plugins/mcelite/examples/data/roadfuzz.rst
+    weights  
+    0.1085  
+    0.3171  
+    0.062  
+    0.0869  
+    0.1073  
+    0.3182  
+    oweights  
+    0.5  
+    0.3  
+    0.125  
+    0.05  
+    0.025  
+    0.0  
+    sensitivity
+    0
+    4
+    5
+    min  
+    -0.2  
+    max  
+    0.2  
+    step  
+    0.05  
+    threshold  
+    22.0  
+    end  
+    </pre>
+    <p>This file will execute an Ordered Weighted Averaging analysis, using the
+      factors, constraints, weights and order weights as indicated. A
+      sensitivity analysis will be run on first, fifth and sixth factors weights
+      (<i>developfuzz</i>, <i>waterfuzz</i> and <i>roadfuzz).</i></p>
+    <h2 style="page-break-before: always"><a name="Testing">Testing</a></h2>
+    <p> MCELite has not been extensively tested. The QGIS version of the plugin
+      has been tested, however, on Mac OS X, version 10.6.4, Ubuntu Linux
+      (version 10.10, QGIS version 1.4), and Windows 7, Home Premium (64 bit).
+      The IDRISI and ArcMap versions of the plugin have been tested on IDRISI
+      Taiga 16.05 and ArcMap 9.3.1, both on Windows 7, Home Premium edition (64
+      bit).</p>
+    <p> The MCELite package was tested to ensure conformity with results
+      produced by the IDRISI MCE tool, for all three basic analysis types (the
+      IDRISI MCE tool does not include sensitivity analysis). The test set was
+      based on exercises 2-7, 2-8 and 2-9 of the IDRISI Taiga Tutorial (Eastman
+      2009). MCELite produced identical results for the Boolean and WLC
+      analyses, and slightly different results for the OWA analysis. Results
+      files to check compliance can be found in the examples/results_reference
+      sub-directory of the MCELite installation.</p>
+    <p> Because the OWA procedure (see Ordered Weighted Averaging section,
+      above) involves multiplying factor weights at a specific coordinate by two
+      decimal numbers between 0 and 1 before summing, the final value range
+      results is necessarily reduced. IDRISI apparently applies a scaling
+      algorithm to the final results to extend them to the same range as the
+      original input (8 bit integers, with values from 0 to 255). In the OWA
+      example, the value range for the original IDRISI-produced results was 0 -
+      246, while the value range for the MCELite was 0 - 21. Nevertheless, it is
+      apparent in Figures 3-6 that the value distribution is similar across the
+      smaller range. There is the issue that rounding the results to 8-bit
+      integer values without rescaling may lose some information, as can be seen
+      in Figure 6, showing the discontinuous data range due to the data being
+      rounded to integer values.</p>
+    <p> <b>Figure 3:</b> Results of IDRISI OWA Analysis (zero values black,
+      display stretched to Min-Max [0-246])</p>
+    <p><img src="MCElite_documentation_html_798c0f4a.png" name="graphics3" border="0"></p>
+    <p> <b>Figure 4</b>: Graph of IDRISI OWA Analysis data values (0-246)</p>
+    <p> <img src="MCElite_documentation_html_37d3.png" name="graphics6" border="0">
+    </p>
+    <p> <b>Figure 5</b>: Results of MCELite OWA Analysis (zero values black,
+      display stretched to Min-Max [0-21])</p>
+    <p> <img src="MCElite_documentation_html_6c08c6c.png" name="graphics4" border="0">
+    </p>
+    <p><b>Figure 6</b>: Graph of MCELite OWA Analysis data values (0-21)</p>
+    <p> <img src="MCElite_documentation_html_309605ff.png" name="graphics5" border="0">
+    </p>
+    <h2>Limitations</h2>
+    <p>There are important limitations in the implementation of MCELite, as the
+      name indicates. The use of this tool on very large rasters is likely to
+      consume substantial memory and provoke swapping (although memory use was
+      modest when tested on the sample dataset). There are some ways to deal
+      with this problem by “chunking” the data, using the Rasterlite format (<a
+        href="http://www.gdal.org/frmt_rasterlite.html">http://www.gdal.org/frmt_rasterlite.html</a>),
+      which integrates raster data into SQLite3 database files. The program
+      attempts, to the extent possible, to reduce memory usage by keeping raster
+      data in memory for as short a time as possible and limiting concurrent
+      calculations with raster files. </p>
+    <p>The GUI itself if something of a limitation, making it impractical to
+      work with more than 15 or so layers of one type (in QGIS). The ArcGIS GUI
+      interface is awkward and makes it difficult to see all the parameters at
+      the same time. Neither of these are limitations with the standalone
+      command-line interface, of course, which reads data directly from
+      configuration files. </p>
+    <p>One very important limitation is the lack of fuzzy set membership
+      functions in QGIS. This means that the most useful type of input rasters
+      need to be developed with external tools. </p>
+    <h2>Potential Improvements</h2>
+    <p>There are any number of ways that MCELite could be improved, starting
+      with addressing the aforementioned limitations. There are other QGIS
+      plugins that manipulate raster files, one of the most relevant being
+      RasterCalc. No code from that project was used in MCELite, but there may
+      be better ways to implement the RasterObject. At the very least,
+      RasterCalc supports more raster functions than MCELite.</p>
+    <p>Currently, MCELite does not provide any functions for developing fuzzy
+      criteria, which would be useful for the development of the factor layers.
+      As far as the author is aware, there are no fuzzy criteria tools yet
+      available for QGIS.</p>
+    <p>MCELite loads raster data directly from the filesystem. Using layers
+      already loaded into the GIS suite being used would be an attractive
+      feature. This is possible in QGIS, and will be implemented later.</p>
+    <p>A number of different analytical features are possible, building on the
+      base in the program, using different weighting techniques (<strong>Malczewski
+        2000</strong>). Also, based on the sensitivity analysis functionality,
+      the program can easily calculate many different versions of a set of
+      parameters, modifying them slightly, applied to either factor weighting or
+      order weighting. This would make it possible to analyze a large set of
+      similar situations, and compare the results. A standard set of order
+      weights representing low risk, high risk, moderate risk, 3/4 risk, etc.
+      could be established and applied to an OWA analysis as a block.</p>
+    <p>It should also be possible to convert some of the modules into C/C++
+      code, and implement multi-threaded execution, which could be fairly
+      straightforward for the sensitivity module, provided available memory was
+      sufficient. One limitation to this would be losing the functionality of
+      the numpy module (written mostly in C) and having to re-implement it (or
+      copy the source).</p>
+    <h2><a name="Bugs">Bugs</a></h2>
+    <p>As the software has not been extensively tested, there are sure to be
+      issues at some point. Please submit any bug reports to <a href="mailto:jpglutting@gmail.com">jpglutting@gmail.com</a>,
+      with the subject line “MCELite”. Include as much information about your
+      system and the errors as possible, and I will get back to you as soon as I
+      can.</p>
+    <h2><a name="UnderTheHood">Under the Hood</a></h2>
+    <p>Some basic information about how MCELite works for use from other Python
+      programs.</p>
+    <p>MCELite uses a functional hierarchy of objects (not an inheritance
+      hierarchy – see Figure 7) to work. There are four basic classes that make
+      up MCELite: <i>QueryManager</i>, i&gt;QueryObject, <i>RasterProvider</i>
+      and <i>RasterObject</i>. RasterProviders create RasterObjects and provide
+      file reading/writing services for raster data. RasterObjects contain
+      raster data and geotransform and projection information. The raster grid
+      data is contained in a series of Numpy arrays, which also provide the
+      raster algebra functionality, within each RasterObject. Although only the
+      first layer is used as a part of MCELite, the classes are prepared to work
+      with rasters having any number of layers. RasterObjects also contain logic
+      for the necessary operations (addition and multiplication) required by
+      MCELite functions.</p>
+    <p> <font color="#000000"><b>Figure 7</b>: Functional Hierarchy of MCELite
+        Classes</font></p>
+    <ul>
+      <li> QueryManager
+        <ul>
+          <li> QueryObject-1 </li>
+          <li> … </li>
+          <li> QueryObject-n
+            <ul>
+              <li> RasterObject-1 </li>
+              <li> … </li>
+              <li> RasterObject-N
+                <ul>
+                  <li> NumPy Array (raster layer) – 1 </li>
+                  <li> … </li>
+                  <li> NumPy Array (raster layer) – n </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+    <p>The <span>QueryManager </span>class, which is sub-classed for each
+      application ( QgisQueryManager, IdrisiQueryManager and ArcQueryManager),
+      manages the importation of information and settings from the execution
+      environment, and the creation of necessary <span>QueryObjects</span>. The
+      QueryManager transfers data and settings to QueryObjects, and calls
+      QueryObject functions which carry out the analysis required. Results are
+      held in RasterObjects embedded in the QueryObjects. Each QueryObject also
+      has an embedded RasterProvider object. QueryObjects are given references
+      to the input raster files needed, and the RasterProviders create instances
+      of RasterObjects from the files. Each QueryManager object also has an
+      embedded RasterProvider to manage the output of the results to the
+      appropriate file format. </p>
+    <p>RasterProviders manage all file reading and writing, and in the future
+      will manage movement of raster data from rasters opened in the GIS suites
+      (the ArcGIS <i>RasterToNumPyArray</i> and <i>NumPyArrayToRaster</i>
+      functions in ArcMap 10 are examples).</p>
+    <p>The QueryManager is largely redundant under normal circumstances, but
+      when carrying out a sensitivity analysis it creates multiple QueryObject
+      instances (in series, rather than concurrently, to limit overall memory
+      use) to compare the results of modifying analytical parameters. </p>
+    <p>MCELite re-implemented a raster object for two principle reasons:
+      portability and extensibility. By implementing a raster object within the
+      plugin itself, the code could be ported more easily to other operating
+      systems and used with other software packages. The GIS packages only
+      transfer the parameters to MCELite and displays the results, as well as
+      some informational messages. </p>
+    <p>The raster object also helps with the extensibility of the tool, by
+      making it easier to modify the functionality of the objects themselves. </p>
+    <h2 style="page-break-before: always"><a name="References">References</a></h2>
+    <p><b>Eastman, JR (2009) </b>IDRISI <i>Taiga Tutorial. Tutorial Version
+        16.02</i>. Clark Labs, Worcester MA.</p>
+    <p> <font color="#000000"><b>Feick, RD and Hall, GB (2004)</b> <span>A
+          method for examining the spatial dimension of multi-criteria weight
+          sensitivity</span>, <i>International Journal of Geographical
+          Information Science</i>, vol 18, no 8, 815-840.</font></p>
+    <p> <font color="#000000"><b>Malczewski, J (2000) </b>On the Use of
+        Weighted Linear Combination Method in GIS: Common and Best Practice
+        Approaches, <i>Transactions in GIS</i>, 4(1), 5-22</font></p>
+    <p> <font color="#000000"><b>Rinner, C and Malczewski, J (2002) </b>Web-enabled
+        spatial decision analysis using Ordered Weighted Averaging (OWA), <i>The
+          Journal of Geographical Systems</i>, 4, 385-403</font></p>
+  </body>
+</html>
+
