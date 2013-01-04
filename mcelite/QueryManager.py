@@ -294,7 +294,7 @@ class BaseQueryManager(object):
     
     def setConfigurationFile(self, filepath):
         if not os.path.isfile(filepath):
-            print "File not available"
+            print("File not available")
             raise IOError
         self.configurationFile = filepath
         
@@ -618,7 +618,7 @@ class BaseQueryManager(object):
         outfilepath = self.rp.writeToFile(rasterOb=self.baseQuery.getResults(), 
                             filepath=self.resultsFilePath,
                             gdal_output_format=self.gdal_output_format)
-        print '%s written' %(outfilepath)
+        print('{0} written'.format(outfilepath))
         self.setResultsFilePath(outfilepath)       
                                 
     def runQuery(self):

@@ -220,7 +220,7 @@ class RasterObject(object):
 
     def adjustDataTypes(self, rores, other):
         if rores.gdt != other.gdt:
-            print '%s and %s have different data types' %(rores.filename, other.filename)
+            print('{0} and {1} have different data types'.format(rores.filename, other.filename))
             return rores, other
         else:
             return rores, other
@@ -355,7 +355,7 @@ class RasterProvider(object):
         rasterOb.setFilepath(filepath)
         ds = gdal.Open(filepath)
         if ds is None:
-            print "File could not be opened."
+            print("File could not be opened.")
             raise MCEliteError('Raster file %s could not be opened' %(filepath))
         # Temp RasterObject
         rasterOb.env = self.env
@@ -379,9 +379,8 @@ class RasterProvider(object):
         # Bands > 1 disabled
         # For now, we will only use one band
         if rasterOb.bands > 1: 
-            print('Multiple Bands [%d] in raster %s in directory %s' \
-                                     %(rasterOb.bands, rasterOb.filename, rasterOb.path))
-        # Reads all bands - this should not be needed, but the RasterObject could have other uses later. 
+            print('Multiple Bands [{0}] in raster {1} in directory {2}'.format(rasterOb.bands, rasterOb.filename, rasterOb.path))
+        # Reads all bands - this should not be needed, but the RasterObject could have other uses for this later. 
         for iband in range(1, rasterOb.bands+1):
             band_data = ds.GetRasterBand(iband)
             rasterOb.gdtd[iband] = gdal.GetDataTypeName(band_data.DataType)
@@ -419,10 +418,10 @@ class RasterProvider(object):
         try:
             ds_out = driver.Create(outfilepath, ro.width, ro.height, 1, gdal.GetDataTypeByName(output_gdt))
         except RuntimeError:
-#            print '\tOUTPUT DATA_FORMAT:', output_gdt
-#            print '\tro.width:', ro.width
-#            print '\tro.height:', ro.height
-#            print '\toutfilepath:', outfilepath
+#            print('\tOUTPUT DATA_FORMAT:', output_gdt)
+#            print('\tro.width:', ro.width)
+#            print('\tro.height:', ro.height)
+#            print('\toutfilepath:', outfilepath)
             raise MCEliteError("Results file %s cannot be written. \
             \nMake sure that it is not opened or write-protected, and that the format is supported." %(outfilepath))
         ds_out.SetGeoTransform(ro.geotransform)

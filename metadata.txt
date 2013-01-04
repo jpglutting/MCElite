@@ -1,15 +1,18 @@
 [general]
+; start of mandatory metadta
 name=MCElite
 description=Multi-Criteria Evaluation Toolfor making multi-criteria evaluations (MCE) based on raster factors and constraints
-qgisMinimumVersion=1.0
+qgisMinimumVersion=1.8
 class_name=MCElite
+homepage=https://github.com/jpglutting/MCElite
 website=www.jpglutting.com
-version=0.1
-
-[author]
-name=JP Glutting
+respository=https://github.com/jpglutting/MCElite
+version=0.1.4
+author=JP Glutting
 email=jpglutting@gmail.com
+; end of mandatory metadta
 
+; start of optional metadta
 ; experimental flag
 experimental=True
 

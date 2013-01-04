@@ -24,14 +24,23 @@ email                : jpglutting@gmail.com
 def name(): 
     return "MCElite" 
 
+def author():
+    return "JP Glutting"
+
 def description():
     return "Multiple Criteria Analysis tool"
 
+def homepage():
+    return "www.jpglutting.com"
+
+def respository():
+    return "https://github.com/jpglutting/MCElite"
+
 def version(): 
-    return "Version 0.1.2" 
+    return "Version 0.1.4" 
 
 def qgisMinimumVersion():
-    return "1.0"
+    return "1.8"
 
 def classFactory(iface): 
     # load MCElite class from file MCElite

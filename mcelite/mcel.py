@@ -56,7 +56,7 @@ def main():
     qm.setConfigurationFile(config_file)
     qm.readMCEConfig(config_file)
     qm.runQuery()
-    print 'Results written to', qm.getResultsFilePath()
+    print('Results written to', qm.getResultsFilePath())
 
 if __name__ == "__main__":
     main()
