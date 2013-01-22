@@ -107,10 +107,10 @@ class RasterObject(object):
                 raise ValueError('Rasters have incompatible dimensions')
             else:
                 return self.add_ro_ro(rores, other)
-        elif isinstance(other, bool):
-            raise TypeError
         elif isinstance(other, (int, long, float)):
             return self.add_ro_num(rores, float(other))
+        elif isinstance(other, bool):
+            raise TypeError
         else:
             return NotImplemented
 
@@ -169,10 +169,10 @@ class RasterObject(object):
                 raise ValueError('Rasters have incompatible dimensions')
             else:
                 return self.mul_ro_ro(rores, other)
-        elif isinstance(other, bool):
-            raise TypeError
         elif isinstance(other, (int, long, float)):
             return self.mul_ro_num(rores, float(other))
+        elif isinstance(other, bool):
+            raise TypeError
         else:
             return NotImplemented
 
@@ -386,6 +386,7 @@ class RasterProvider(object):
             rasterOb.gdtd[iband] = gdal.GetDataTypeName(band_data.DataType)
             rasterOb.datad[iband] = band_data.ReadAsArray()
             rasterOb.npdt[iband] = rasterOb.datad[iband].dtype
+        # Set a mask value (optional) for non-data pixels
         rasterOb.setMask(maskVal)
         rasterOb.gdt = copy.copy(rasterOb.gdtd[1])
         # Make masked array to exclude NoDataValue from calculations

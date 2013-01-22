@@ -126,22 +126,26 @@ class QueryObject(object):
         oweights = array(self.mceData['oweights'])
         factor_rasters = self.calFactorWeights()
         self.resultsRaster = factor_rasters[0].yieldCopy()
+        # aList = set numpy arrays for factors
         aList = [x.datad[1] for x in factor_rasters]
         factor_rasters = None
+        # aShapes = shapes of arrays in list
         aShapes = [x.shape for x in aList]
         refShape = aShapes[0]
         w,l = refShape
+        # There must be one order weight for each factor, sanity check for input errors
         if len(oweights) != len(aList):
             raise IndexError('There must be exactly one order weight per layer.')
         if [x for x in aShapes if x != refShape]:
             raise IndexError('Not all layers have the same dimensions.')
+        # Create 3d stack of numpy arrays of factors, and void aList
         a3D = array(aList)
         aList = None
         # Extract columns for each (x,y) coordinate point in raster, as a list
         cols = [a3D[:,x,y] for x in range(w) for y in range(l)]
         # Sort columns (smallest to largest)
         [x.sort() for x in cols]
-        # Apply oder weights to all columns, and then sum, 
+        # Apply order weights to all columns, and then sum, 
         # leaving a single value per coordinate point
         # Converted to an array and reshaped to the dimensions of the original raster
         newArray = array([sum(x*oweights) for x in cols]).reshape(refShape)
@@ -246,6 +250,8 @@ class BaseQueryManager(object):
                     'constraints', 'factors', 'weights','oweights',
                     'sensitivity','min','max','step','threshold',
                     'end']
+        # Dictionary registering data source and data target functions
+        #   for each set of configuration options
         self.dconfig_sections = {
                     'mcetype':{'type':str, 'source':self.getMCEType,
                                 'target':self.setMCEType,},
@@ -298,13 +304,7 @@ class BaseQueryManager(object):
             raise IOError
         self.configurationFile = filepath
         
-    def setGdalFormat(self, fmt=None):
-        fmt = self.undo_list(fmt)
-        if fmt:
-            self.gdal_output_format = fmt
-        else:
-            self.gdal_output_format = self.dEnv[self.env]
-        
+
     def setEnv(self, inEnv=None):
         inEnv = self.undo_list(inEnv)
         if inEnv:
@@ -312,7 +312,14 @@ class BaseQueryManager(object):
         else:
             self.env = 'standalone'
         self.setGdalFormat()
-       
+
+    def setGdalFormat(self, fmt=None):
+        fmt = self.undo_list(fmt)
+        if fmt:
+            self.gdal_output_format = fmt
+        else:
+            self.gdal_output_format = self.dEnv[self.env]
+
     def setMCEType(self, mtype):
         mtype = self.undo_list(mtype)
         self.mceType = mtype
@@ -406,6 +413,7 @@ class BaseQueryManager(object):
         self.sensitivityMods = arange(start, stop, step)
         
     def runSensitivityAnalysis(self):
+        # Only run with flag set, on non-boolean rasters
         if self.sensitivity is not True or self.mceType == 'Bool': 
             return
         # Calculate value modifications (weights) to be applied to test factors.
